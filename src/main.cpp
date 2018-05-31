@@ -8,6 +8,7 @@
 
 Adafruit_IS31FL3731_Wing matrix = Adafruit_IS31FL3731_Wing();
 
+// Takes FFT results and draws them to LED matrix
 void drawGraph(float *values[]) {
     for(int x = 0; x < 16; x++) {
         int height = (int) values[x] * 7;
@@ -46,26 +47,28 @@ void loop() {
         Serial.println(signal[i]);
     }
 
-    /*ZeroFFT(signal, FFT_SIZE);
+    ZeroFFT(signal, FFT_SIZE);
 
-    //get the maximum value
+    // Normalize values on scale of 0-1
+    // get the maximum value
     float maxVal = 0;
-    //data is only meaningful up to sample rate/2, discard the other half
+    // is only meaningful up to sample rate/2, ignore the other half
     for(int i=0; i < FFT_SIZE_OUT; i++) if(signal[i] > maxVal) maxVal = signal[i];
-
     for(int i=0; i < FFT_SIZE_OUT; i++)
         normalized[i] = (float)signal[i] / maxVal;
 
     for(int i=0; i < FFT_SIZE_OUT; i++){
         // print the frequency
-        //Serial.print(FFT_BIN(i, SAMPLE_RATE, FFT_SIZE));
-        //Serial.print(" Hz: ");
+#ifdef READABLE_OUTPUT
+        Serial.print(FFT_BIN(i, SAMPLE_RATE, FFT_SIZE));
+        Serial.print(" Hz: ");
+#endif
 
         // print the corresponding FFT output
         Serial.print(normalized[i]);
 
         Serial.print("\t");
-    }*/
+    }
 
     Serial.println();
 }

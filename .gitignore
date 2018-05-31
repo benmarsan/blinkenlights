@@ -1,4 +1,18 @@
+# Created by https://www.gitignore.io/api/platformio,visualstudiocode
+
+### PlatformIO ###
 .pioenvs
 .piolibdeps
 .clang_complete
 .gcc-flags.json
+
+### VisualStudioCode ###
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+.history
+
+
+# End of https://www.gitignore.io/api/platformio,visualstudiocode

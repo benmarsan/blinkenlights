@@ -1,3 +1,6 @@
+//#define READABLE_OUTPUT
+
+#define MIC_PIN A0
 #define LED_POWER 10
 
 #define BRIGHTNESS_OFF 0x01
