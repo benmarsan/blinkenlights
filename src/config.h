@@ -1,3 +1,5 @@
+//#define OUTPUT_RAW
+#define OUTPUT_FFT
 //#define READABLE_OUTPUT
 
 #define MIC_PIN A0
