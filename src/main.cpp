@@ -1,20 +1,25 @@
 #include <Arduino.h>
 #include <Adafruit_GFX.h>
 #include <Adafruit_IS31FL3731.h>
-#include <Adafruit_ZeroFFT.h>
+#include "arduinoFFT.h"
 
 #include "config.h"
 #include "FastADC.h"
 
 Adafruit_IS31FL3731_Wing matrix = Adafruit_IS31FL3731_Wing();
 
+arduinoFFT FFT = arduinoFFT();
+
 unsigned int sampling_period_us;
 unsigned long microseconds;
 
+double vReal[FFT_SIZE];
+double vImag[FFT_SIZE];
+
 // Takes FFT results and draws them to LED matrix
-void drawGraph(int16_t values[]) {
+void drawGraph(double values[]) {
     for(int x = 0; x < 16; x++) {
-        int height = values[x+1] / 4;
+        int height = (int) values[x+1];
 
         // Draw bottom of line
         matrix.drawFastVLine(x, 8, -height, BRIGHTNESS_ON);
@@ -46,55 +51,58 @@ void setup() {
 
 void loop() {
     // signal array stores microphone input data
-    int16_t signal[FFT_SIZE];
     int16_t signal_db[FFT_SIZE_OUT];
 
     for(int i = 0; i < FFT_SIZE; i++) {
         microseconds = micros(); // Overflows after around 70 minutes!
 
         // Read mic into signal[i]
-        signal[i] = anaRead();
-
-#ifdef OUTPUT_RAW
-        Serial.println(signal[i]);
-#endif
+        vReal[i] = anaRead() - MIC_DC_OFFSET;
+        vImag[i] = 0;
 
         while(micros() < (microseconds + sampling_period_us)){
             //empty loop
         }
     }
 
+#ifdef OUTPUT_RAW
+    for(int i = 0; i < FFT_SIZE; i++) {
+        Serial.print(vReal[i]);
+        Serial.print("\t");
+    }
+    Serial.println();
+#endif
+
     // Compute FFT
-    ZeroFFT(signal, FFT_SIZE);
+    FFT.Windowing(vReal, FFT_SIZE, FFT_WIN_TYP_HAMMING, FFT_FORWARD);	/* Weigh data */
+    FFT.Compute(vReal, vImag, FFT_SIZE, FFT_FORWARD); /* Compute FFT */
+    FFT.ComplexToMagnitude(vReal, vImag, FFT_SIZE); /* Compute magnitudes */
 
     for(int i = 0; i < FFT_SIZE_OUT; i++) {
-        signal_db[i] = 20 * log10(signal[i]);
+        //vReal[i] = 1 * log10(vReal[i]);
+        vReal[i] = sqrt(vReal[i]) / 10;
     }
 
     // Draw to matrix
-    drawGraph(signal_db);
+    drawGraph(vReal);
 
     // Print FFT data to serial monitor
 #ifdef OUTPUT_FFT
     for(int i=0; i < FFT_SIZE_OUT; i++){
         // print the frequency band
-#ifdef READABLE_OUTPUT
-        Serial.print(FFT_BIN(i, SAMPLE_RATE, FFT_SIZE));
-        Serial.print(" Hz: ");
-#endif
 
 #ifdef OUTPUT_FFT_REAL
         // print the corresponding FFT output
-        Serial.print(signal[i]);
+        Serial.print(vReal[i]);
         Serial.print("\t");
 #endif
 #ifdef OUTPUT_FFT_NORMALIZED
         // print the normalized FFT output
-        Serial.print(signal_db[i]);
+        Serial.print(vReal[i]);
         Serial.print("\t");
 #endif
     }
-#endif
 
     Serial.println();
+#endif
 }
