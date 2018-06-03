@@ -1,17 +1,20 @@
 #include <Arduino.h>
 #include <Adafruit_GFX.h>
 #include <Adafruit_IS31FL3731.h>
-#include <I2S.h>
 #include <Adafruit_ZeroFFT.h>
 
 #include "config.h"
+#include "FastADC.h"
 
 Adafruit_IS31FL3731_Wing matrix = Adafruit_IS31FL3731_Wing();
 
+unsigned int sampling_period_us;
+unsigned long microseconds;
+
 // Takes FFT results and draws them to LED matrix
-void drawGraph(float *values[]) {
+void drawGraph(int16_t values[]) {
     for(int x = 0; x < 16; x++) {
-        int height = (int) values[x] * 7;
+        int height = values[x+1] / 4;
 
         // Draw bottom of line
         matrix.drawFastVLine(x, 8, -height, BRIGHTNESS_ON);
@@ -21,6 +24,8 @@ void drawGraph(float *values[]) {
 }
 
 void setup() {
+    sampling_period_us = round(1000000*(1.0/SAMPLE_RATE));
+    
     // Turn on power button LED
     pinMode(LED_POWER, OUTPUT);
     digitalWrite(LED_POWER, HIGH);
@@ -34,52 +39,60 @@ void setup() {
     }
     matrix.fillScreen(BRIGHTNESS_OFF);
 
-    // setup the I2S audio input for SAMPLE_RATE Hz with 32-bits per sample
-    if (!I2S.begin(SAMPLE_RATE, 32)) {
-        Serial.println("Failed to initialize I2S input");
-        while (1);
-    }
-
+    // Setup ADC for fast reads
+    selAnalog(MIC_PIN);
+    fastADCsetup();
 }
 
 void loop() {
     // signal array stores microphone input data
     int16_t signal[FFT_SIZE];
-    // normalized array used to normalize output to 0-1
-    float normalized[FFT_SIZE_OUT];
+    int16_t signal_db[FFT_SIZE_OUT];
+
+    for(int i = 0; i < FFT_SIZE; i++) {
+        microseconds = micros(); // Overflows after around 70 minutes!
+
+        // Read mic into signal[i]
+        signal[i] = anaRead();
 
 #ifdef OUTPUT_RAW
-    for(int i = 0; i < FFT_SIZE; i++) {
-        signal[i] = I2S.read();
         Serial.println(signal[i]);
-    }
 #endif
+
+        while(micros() < (microseconds + sampling_period_us)){
+            //empty loop
+        }
+    }
 
     // Compute FFT
     ZeroFFT(signal, FFT_SIZE);
 
-    // Normalize values on scale of 0-1
-    // get the maximum value
-    float maxVal = 0;
+    for(int i = 0; i < FFT_SIZE_OUT; i++) {
+        signal_db[i] = 20 * log10(signal[i]);
+    }
 
-    // is only meaningful up to sample rate/2, ignore the other half
-    for(int i=0; i < FFT_SIZE_OUT; i++) if(signal[i] > maxVal) maxVal = signal[i];
-
-    for(int i=0; i < FFT_SIZE_OUT; i++)
-        normalized[i] = (float)signal[i] / maxVal;
+    // Draw to matrix
+    drawGraph(signal_db);
 
     // Print FFT data to serial monitor
 #ifdef OUTPUT_FFT
     for(int i=0; i < FFT_SIZE_OUT; i++){
-        // print the frequency
+        // print the frequency band
 #ifdef READABLE_OUTPUT
         Serial.print(FFT_BIN(i, SAMPLE_RATE, FFT_SIZE));
         Serial.print(" Hz: ");
 #endif
 
+#ifdef OUTPUT_FFT_REAL
         // print the corresponding FFT output
-        Serial.print(normalized[i]);
+        Serial.print(signal[i]);
         Serial.print("\t");
+#endif
+#ifdef OUTPUT_FFT_NORMALIZED
+        // print the normalized FFT output
+        Serial.print(signal_db[i]);
+        Serial.print("\t");
+#endif
     }
 #endif
 
