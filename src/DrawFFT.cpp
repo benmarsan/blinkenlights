@@ -3,8 +3,6 @@
 
 DrawFFT::DrawFFT() {
     memset(col , 0, sizeof(col));
-
-    Adafruit_IS31FL3731_Wing matrix = Adafruit_IS31FL3731_Wing();
 }
 
 int DrawFFT::begin() {
@@ -13,7 +11,7 @@ int DrawFFT::begin() {
         Serial.println("LED matrix not found");
         return 0;
     }
-    
+
     return 1;
 }
 
