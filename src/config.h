@@ -9,7 +9,7 @@
 #define BRIGHTNESS_OFF 0x01
 #define BRIGHTNESS_ON  0x09
 
-#define SAMPLE_RATE      8000
-#define FFT_SIZE 32
+#define SAMPLE_RATE      16000
+#define FFT_SIZE 64
 #define FFT_SIZE_OUT (FFT_SIZE / 2)
 #define MIC_DC_OFFSET 1.25 / 3.3 * 4096
