@@ -54,7 +54,7 @@ class DrawFFT
 
   public:
     DrawFFT();
-    void begin();
+    int begin();
     void update(int16_t *spectrum);
 };
 

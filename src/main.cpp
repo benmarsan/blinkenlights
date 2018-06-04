@@ -34,7 +34,10 @@ void setup() {
     Serial.begin(115200);
 
     // Initialize the display object
-    fftDisplay.begin();
+    if(!fftDisplay.begin()) {
+        Serial.println("DrawFFT begin failed");
+        while(1);
+    }
 
     // Setup ADC for fast reads
     selAnalog(MIC_PIN);

@@ -7,12 +7,14 @@ DrawFFT::DrawFFT() {
     Adafruit_IS31FL3731_Wing matrix = Adafruit_IS31FL3731_Wing();
 }
 
-void DrawFFT::begin() {
+int DrawFFT::begin() {
     // Setup the LED matrix
-    if (!matrix.begin()) {
+    if(!matrix.begin()) {
         Serial.println("LED matrix not found");
-        while (1);
+        return 0;
     }
+    
+    return 1;
 }
 
 void DrawFFT::update(int16_t *spectrum) {
