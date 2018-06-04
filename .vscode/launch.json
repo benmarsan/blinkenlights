@@ -1,0 +1,31 @@
+// AUTOMATICALLY GENERATED FILE. PLEASE DO NOT MODIFY IT MANUALLY
+
+// PIO Unified Debugger
+//
+// Documentation: http://docs.platformio.org/page/plus/debugging.html
+// Configuration: http://docs.platformio.org/page/projectconf/section_env_debug.html
+
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "platformio-debug",
+            "request": "launch",
+            "name": "PlatformIO Debugger",
+            "executable": "c:/Users/biimi/Documents/spectrum/.pioenvs/adafruit_feather_m0/firmware.elf",
+            "toolchainBinDir": "C:/Users/biimi/.platformio/packages/toolchain-gccarmnoneeabi/bin",
+            "svdPath": "C:/Users/biimi/.platformio/platforms/atmelsam/misc/svd/ATSAMD21G18A.svd",
+            "preLaunchTask": "PlatformIO: Pre-Debug",
+            "internalConsoleOptions": "openOnSessionStart"
+        },
+        {
+            "type": "platformio-debug",
+            "request": "launch",
+            "name": "PlatformIO Debugger (Skip Pre-Debug)",
+            "executable": "c:/Users/biimi/Documents/spectrum/.pioenvs/adafruit_feather_m0/firmware.elf",
+            "toolchainBinDir": "C:/Users/biimi/.platformio/packages/toolchain-gccarmnoneeabi/bin",
+            "svdPath": "C:/Users/biimi/.platformio/platforms/atmelsam/misc/svd/ATSAMD21G18A.svd",
+            "internalConsoleOptions": "openOnSessionStart"
+        }
+    ]
+}
