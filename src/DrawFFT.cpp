@@ -13,8 +13,6 @@ void DrawFFT::begin() {
         Serial.println("LED matrix not found");
         while (1);
     }
-
-    //matrix.fillScreen(0x00);
 }
 
 void DrawFFT::update(int16_t *spectrum) {
