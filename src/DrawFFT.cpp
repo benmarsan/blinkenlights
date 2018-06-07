@@ -1,6 +1,8 @@
 #include "DrawFFT.h"
 #include "config.h"
 
+constexpr int16_t DrawFFT::noise[];
+
 DrawFFT::DrawFFT() {
     memset(col , 0, sizeof(col));
 }
@@ -16,26 +18,25 @@ int DrawFFT::begin() {
 }
 
 void DrawFFT::update(int16_t *spectrum) {
-    uint8_t  i, L, *data, nBins, binNum, weighting, c;
-    uint16_t minLvl, maxLvl;
-    int level, y, sum;
-
-    uint32_t start = micros();
-
-    // Write to drawFrame while previous frame is visible
+    // Double buffer matrix by drawing to next frame while
+    // previous frame is visible on screen
     matrix.setFrame(drawFrame);
 
     // Remove noise and apply EQ levels
+    for(int k = 0; k < FFT_SIZE_OUT; k++) {
+        spectrum[k] -= DrawFFT::noise[k];
+    }
 
     // Downsample spectrum to 15 columns
     for(int x = 0; x < 15; x++) {
         col[x][colCount] = 10 * log10(spectrum[x+1]);
 
         // Starting point for finding new min and max levels
+        uint16_t minLvl, maxLvl;
         minLvl = maxLvl = col[x][0];
 
         // Get range of past 10 frames
-        for(i=1; i<10; i++) {
+        for(int i = 1; i < 10; i++) {
             if(col[x][i] < minLvl)
                 minLvl = col[x][i];
             else if(col[x][i] > maxLvl)
@@ -53,10 +54,12 @@ void DrawFFT::update(int16_t *spectrum) {
 
         // Create normalized scale based on moving min/max levels
         // (Scale is taller than display)
-        level = 10L * (col[x][colCount] - minLvlAvg[x]) /
+        int level = 10L * (col[x][colCount] - minLvlAvg[x]) /
                 (long)(maxLvlAvg[x] - minLvlAvg[x]);
 
         // Clip output and convert to byte:
+        uint8_t c;
+
         if(level < 0L)
             c = 0;
         else if(level > 10)
@@ -64,11 +67,6 @@ void DrawFFT::update(int16_t *spectrum) {
         else
             c = (uint8_t)level;
 
-        Serial.print("x: ");
-        Serial.print(x);
-        Serial.print(" c: ");
-        Serial.println(c);
-        
         // Set new peak if necessary
         if(c > peak[x])
             peak[x] = c;
@@ -81,9 +79,8 @@ void DrawFFT::update(int16_t *spectrum) {
             matrix.drawFastVLine(x, 7 - c, c, LED_LOW);
         }
 
-        // The 'peak' dot color varies, but doesn't necessarily match
-        // the three screen regions...yellow has a little extra influence.
-        y = 7 - peak[x];
+        // Draw bright peak dot
+        int y = 7 - peak[x];
         matrix.drawPixel(x, y, LED_HIGH);
     }
 
@@ -101,9 +98,4 @@ void DrawFFT::update(int16_t *spectrum) {
     // Increment and wrap frame counters
     if(++colCount >= 10) colCount = 0;
     if(++drawFrame >= 7) drawFrame = 0;
-
-    uint32_t time = micros() - start;
-    Serial.print("FFT time: ");
-    Serial.print(time);
-    Serial.println(" us");
 }

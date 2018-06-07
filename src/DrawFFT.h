@@ -26,6 +26,7 @@ class DrawFFT
     int16_t maxLvlAvg[15] = {0};        //   levels of graph
     int16_t colDiv[15] = {0};           // Used to filter FFT to 15 columns
 
+    // Noise constants to subtract from FFT output
     static constexpr int16_t noise[32] = {
             0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
             0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
