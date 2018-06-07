@@ -23,7 +23,7 @@ class DrawFFT
 
     uint8_t col[15][10];                // Column levels for past 10 frames
     int16_t minLvlAvg[15] = {0};    // Dynamic adjustment of high and low
-    int16_t maxLvlAvg[15] = {32767};        //   levels of graph
+    int16_t maxLvlAvg[15] = {32767};        //   levels of graph (probably only sets first item?)
     int16_t colDiv[15] = {0};           // Used to filter FFT to 15 columns
 
     // Noise constants to subtract from FFT output
