@@ -2,6 +2,7 @@
 #include "config.h"
 
 constexpr int16_t DrawFFT::noise[];
+constexpr float DrawFFT::eq[];
 
 DrawFFT::DrawFFT() {
     memset(col , 0, sizeof(col));
@@ -14,22 +15,38 @@ int DrawFFT::begin() {
         return 0;
     }
 
+    // Clear all frame buffers
+    for(int f = 0; f < 7; f++) {
+        matrix.setFrame(f);
+        matrix.fillScreen(LED_OFF);
+    }
+    // Reset to first frame
+    matrix.setFrame(0);
+    matrix.displayFrame(0);
+
     return 1;
 }
 
 void DrawFFT::update(int16_t *spectrum) {
     // Double buffer matrix by drawing to next frame while
     // previous frame is visible on screen
-    matrix.setFrame(drawFrame);
+    //matrix.setFrame(drawFrame);
 
     // Remove noise and apply EQ levels
     for(int k = 0; k < FFT_SIZE_OUT; k++) {
-        spectrum[k] -= DrawFFT::noise[k];
+        spectrum[k] = max(spectrum[k] - noise[k], 0);
+        spectrum[k] *= eq[k];
     }
 
     // Downsample spectrum to 15 columns
     for(int x = 0; x < 15; x++) {
-        col[x][colCount] = 10 * log10(spectrum[x+1]);
+        // Average pairs of columns
+        // Designed to work with size 64  with 32 output bins. First and last
+        // bin are unused.
+        int16_t avg = (spectrum[(2*x) + 1] + spectrum[(2*x) + 2]) / 2;
+
+        // Convert raw values to dB/log scale for better display
+        col[x][colCount] = 10 * log10(avg);
 
         // Starting point for finding new min and max levels
         uint16_t minLvl, maxLvl;
@@ -45,22 +62,23 @@ void DrawFFT::update(int16_t *spectrum) {
 
         // If maxLvl and minLvl are too close, then the graph
         // appears 'jumpy', so keep some distance between them
-        if((maxLvl - minLvl) < 24)
-            maxLvl = minLvl + 24;
-        
-        // Fake rolling average of minLvl and maxLvl
-        minLvlAvg[x] = (minLvlAvg[x] * 7 + minLvl) >> 3; // Dampen min/max levels
-        maxLvlAvg[x] = (maxLvlAvg[x] * 7 + maxLvl) >> 3; // (fake rolling average)
+        if((maxLvl - minLvl) < 26)
+            maxLvl = minLvl + 26;
+
+        // Exponential moving average
+        // https://stackoverflow.com/questions/10990618/calculate-rolling-moving-average-in-c
+        minLvlAvg[x] = (minLvl * .2) + (minLvlAvg[x] * .8);
+        maxLvlAvg[x] = (maxLvl * .2) + (maxLvlAvg[x] * .8);
 
         // Create normalized scale based on moving min/max levels
         // (Scale is taller than display)
-        int level = 10L * (col[x][colCount] - minLvlAvg[x]) /
+        int level = 10 * (col[x][colCount] - minLvlAvg[x]) /
                 (long)(maxLvlAvg[x] - minLvlAvg[x]);
 
         // Clip output and convert to byte:
         uint8_t c;
 
-        if(level < 0L)
+        if(level <= 0L)
             c = 0;
         else if(level > 10)
             c = 10; // Allow dot to go a couple pixels off top
@@ -72,20 +90,18 @@ void DrawFFT::update(int16_t *spectrum) {
             peak[x] = c;
 
         // Draw column
-        if(peak[x] <= 0) { // Empty column
+        matrix.drawFastVLine(x, 0, 7, LED_OFF);
+        if(c == 0) {
             matrix.drawFastVLine(x, 0, 7, LED_OFF);
-        } else if(c < 8) { // Partial column
-            matrix.drawFastVLine(x, 0, 7 - c, LED_OFF);
-            matrix.drawFastVLine(x, 7 - c, c, LED_LOW);
+        } else {
+            matrix.drawFastVLine(x, 8, -c, LED_LOW);
         }
 
-        // Draw bright peak dot
-        int y = 7 - peak[x];
-        matrix.drawPixel(x, y, LED_HIGH);
+        matrix.drawPixel(x, 7 - peak[x], LED_HIGH);
     }
 
     // Show frame
-    matrix.displayFrame(drawFrame);
+    //matrix.displayFrame(drawFrame);
 
     // Every third frame, make the peak pixels drop by 1:
     if(++dotCount >= 3) {
@@ -97,5 +113,5 @@ void DrawFFT::update(int16_t *spectrum) {
 
     // Increment and wrap frame counters
     if(++colCount >= 10) colCount = 0;
-    if(++drawFrame >= 7) drawFrame = 0;
+    if(++drawFrame > 7) drawFrame = 0;
 }

@@ -22,14 +22,25 @@ class DrawFFT
             LED_ON = 255;
 
     uint8_t col[15][10];                // Column levels for past 10 frames
-    int16_t minLvlAvg[15] = {32767};    // Dynamic adjustment of high and low
-    int16_t maxLvlAvg[15] = {0};        //   levels of graph
+    int16_t minLvlAvg[15] = {0};    // Dynamic adjustment of high and low
+    int16_t maxLvlAvg[15] = {32767};        //   levels of graph
     int16_t colDiv[15] = {0};           // Used to filter FFT to 15 columns
 
     // Noise constants to subtract from FFT output
     static constexpr int16_t noise[32] = {
-            0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-            0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+            190, 105, 8, 8, 5, 5, 5, 5, // 0-7
+            5, 5, 5, 5, 5, 5, 5, 5, // 8-15
+            3, 3, 3, 2, 2, 2, 2, 2, // 16-23
+            2, 2, 2, 2, 2, 2, 2, 2  // 24-32
+        };
+
+    // FFT outputs are multiplied by EQ constants to change weight of certain
+    // bins.
+    static constexpr float eq[32] = {
+            1, 1, 1, 1, 1, 1, 1, 1, // 0-7
+            1, 1, 1, 1, 1, 1, 1, 1, // 8-15
+            1, 1, 1, 1, 1, 1, 1, 1, // 16-23
+            1, 1, 1, 1, 1, 1, 1, 1,  // 24-32
         };
 
   public:
