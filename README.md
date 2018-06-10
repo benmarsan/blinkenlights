@@ -10,7 +10,7 @@ M3 bolts.
 
 ## BOM
 
-### Adafruit
+### Electronics
 
 | Part                                   | Adafruit Part No.                                                                              |
 |----------------------------------------|------------------------------------------------------------------------------------------------|
@@ -37,5 +37,21 @@ M3 bolts.
 | Frosted Acrylic, 2-3 x 26 x 60 mm                   | 1   | -                                                         |
 
 ## Assembly
+
+### Wiring
+
+The illuminated toggle power button and microphone can be wired to the bottom of
+the Feather's proto board with the right angle header and DuPont connectors.
+
+![fritzing](https://lh3.googleusercontent.com/5NHlh4DSRBiCAwgx9jGlC1z4nyOTzJ-hkCKyq0k9myFz3cnMhCXNBUwAQpkvS9XjRSCH_KKlPkHA11y0URVWCTKKEI75pWN2HY5njxVVwcIKkvesRhXAH0ZrfmAbGbTm1EM5OcFFjkBrW78v1dKi_BxDIysixTqpzAKTVY0HDGx5CnwDk4czp-8PQIG041xC1izkZQSV7WWEAu7jtNe-w4k3jHfUXotvIVkXjRTo58mHtzTbUJU2-jbDhEL83wbA_wAudFv2yeOGmPeVqHMbA3NmQOMYwaifMx8StLzpTHdNddSuFMsTHu6d-PxVNA6Ey-ueueeiqNKJxlW79i-revinEzqWp9w3vFtCr0DEL5aQeePIsh0LMqrx2Xfc4sczWvwlL1zPi4_2M1VnrO4dYrCE7tsA5qs-hc9FFwH-72fK6qKDsVxRDn7HL2eQ7H6uCwaZPYj3rcM9QPsUNtY_I1oIQDr60x_p2R6R_H_Qxh0DE0g9vpHszamnqE90ggl-XAesAUFj2dqL5JlLHx-Yj31qT_xL9xndnLfurvgnVktHMVqI4Ja7bpRaLoEB1c0H9tTOFUSbFpHGPyjTTqh73RkuJsWftzxHwGfS8fV8jMYeytjrHYUZ2Q40keebEb0xEifVMe4kranFMR2ttcaEvy27bJVwMKzSEw=w1222-h634-no)
+
+### 3D Printed Parts
+
+This case was printed at 0.2 mm with supports to prevent chamfered corners from
+lifting from the bed. Mic is held into the top with a M3 x 6 mm screw and
+washer. The screen holders also use M3 x 6 mm screws. The battery holders use
+the two M3 x 8 mm screws, but 6 mm long ones would also work. The Feather is
+attached to the bottom with the M2.5 hex standoffs. The two halves are then held
+together with the M3 x 18 mm screws.
 
 ![the guts](https://lh3.googleusercontent.com/ncu6nhOK2kZerwsVpyn1Z2fhz47v1G1On_dZgy9rqyUxvE5QJxXIVYwNKmy3qEXZMJ6J6Rewye3NP7yaXyfRT97FbaaLzk3Wtd47Z-DKpQmGL6xmrwgOWhgOHlC3PImebf-HS0JxR8d8tWVVO3MRVFcDQbTsIQUaHzMRQlmQh02YkD2qd5oIEyYApS-1d5Fsy9Qzw-YqcRwErJmbQAl-kuV0bNkScedf8TWAZ5nJqm9fWzgCA9ngz-c_xoWuFemX8IKkLvaV8Un9hr7r4mIFRvs_aJi8jsgWj6V8JMneJXGdHKcjU6bc7kj5dNTr8Ytz-5cVEIz4_hmk4BC6_LUvBGt78KZ0GiGNH9FibVq4dPIvAdfE5F2B7qLuhj-hoiXSfZPXhHvm3H0Ea5G24L2F6hDYL2xeAUprYq9PRhDuCJmLdZvtngIxvuYo6XgFTMSdoO6OaP7PmPEr7Ans8xU7lC6X58SSaNU_Qq6LAEpBtuCj-tmO9cBNfiuql_wxSmCzGwM5EjerK0vpKs-JLBU8hjRiS11AJp1EhzFRArywu1Q1LFAPtO3zlLAS-5-nDPRjZS7KX_Vf7EbfRAz70kk3OLs8JghhNuJnPO0CskAicLbgTNz0rdgqbEQneslC8oJtvbtEZC53h4d7XZ8JsL4nGp7Dq2n46NsweQ=w910-h683-no)
