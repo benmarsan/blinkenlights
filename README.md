@@ -6,8 +6,7 @@ the FFT in real time. All of the electronics fit into a 3d printed case. The
 visualized is based on Adafruit's [Piccolo](https://github.com/adafruit/piccolo)
 project.
 
-
-![animation](https://lh3.googleusercontent.com/ADkJpR76Y8T1v87dgCgvf0EQ0NSIyNwexFypPOtBqY8uFTy2-gpWoWiywJXV1YDah_V3m_UcYoQEOGWDaPItCThJLzY-HPntpn8f1EyyYxwTv6_5Fz_oO62BfSSUqzPo6G99OGuZpM0r8xi8kyXL9zMTzRqpNsw4o2pwb67yg7FLvTdQb4sxX-TfELsOKxfLYzPO0rLVSj8eGYOpr6PV541MD3T6DfsYGxLuiYI_XwIfp1C69ypxZKV36sbyAZp7JjGBIX0iZCZHBZNT6z0eP2YxYjP7gNpWois4toytyeR8bdYmYsON3znOZzhNa057Tko3F5xCzZe__6QIFINVAeDoZQL7trod9depe28_VgdN7y1C8Uvu6qSZu5WubdPElS7mD3V6H_75_cGKqT8SqMA3CNEpuAgkajfnWLGKGWiW181ep03roPfJOtJHJvC0orbNnvftO3pA6DlyXRGwIFWREOyG-H6ptUU20eM4z6ZHJjNH_kN86VQd3ynSqtNzwqUEN2UgBG-h27vFavBP48ZJ3QbI-RgFgB7uhpaknZ23akLkqJH6aHAN5fS8lQCeQsHrX6JjnTAwXK2c3ws3Cedq-kO10crBWqaraw4W=s290-no)
+![animation](https://i.imgur.com/gGSSnmH.gif)
 
 ## BOM
 
