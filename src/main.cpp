@@ -23,6 +23,8 @@ void setup() {
         while(1);
     }
 
+    // Increase I2C clock speed to maximum of 400000 Hz to speed up display
+    // writes.
     Wire.setClock(400000);
 
     // Setup ADC for fast reads
