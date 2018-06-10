@@ -52,6 +52,6 @@ lifting from the bed. Mic is held into the top with a M3 x 6 mm screw and
 washer. The screen holders also use M3 x 6 mm screws. The battery holders use
 the two M3 x 8 mm screws, but 6 mm long ones would also work. The Feather is
 attached to the bottom with the M2.5 hex standoffs. The two halves are then held
-together with the M3 x 18 mm screws.
+together with the three M3 x 16 mm screws.
 
 ![the guts](https://lh3.googleusercontent.com/ncu6nhOK2kZerwsVpyn1Z2fhz47v1G1On_dZgy9rqyUxvE5QJxXIVYwNKmy3qEXZMJ6J6Rewye3NP7yaXyfRT97FbaaLzk3Wtd47Z-DKpQmGL6xmrwgOWhgOHlC3PImebf-HS0JxR8d8tWVVO3MRVFcDQbTsIQUaHzMRQlmQh02YkD2qd5oIEyYApS-1d5Fsy9Qzw-YqcRwErJmbQAl-kuV0bNkScedf8TWAZ5nJqm9fWzgCA9ngz-c_xoWuFemX8IKkLvaV8Un9hr7r4mIFRvs_aJi8jsgWj6V8JMneJXGdHKcjU6bc7kj5dNTr8Ytz-5cVEIz4_hmk4BC6_LUvBGt78KZ0GiGNH9FibVq4dPIvAdfE5F2B7qLuhj-hoiXSfZPXhHvm3H0Ea5G24L2F6hDYL2xeAUprYq9PRhDuCJmLdZvtngIxvuYo6XgFTMSdoO6OaP7PmPEr7Ans8xU7lC6X58SSaNU_Qq6LAEpBtuCj-tmO9cBNfiuql_wxSmCzGwM5EjerK0vpKs-JLBU8hjRiS11AJp1EhzFRArywu1Q1LFAPtO3zlLAS-5-nDPRjZS7KX_Vf7EbfRAz70kk3OLs8JghhNuJnPO0CskAicLbgTNz0rdgqbEQneslC8oJtvbtEZC53h4d7XZ8JsL4nGp7Dq2n46NsweQ=w910-h683-no)
