@@ -11,8 +11,6 @@ unsigned long microseconds;
 int16_t signal[FFT_SIZE];
 
 void setup() {
-    sampling_period_us = round(1000000*(1.0/SAMPLE_RATE));
-
     // Turn on power button LED
     pinMode(LED_POWER, OUTPUT);
     digitalWrite(LED_POWER, HIGH);
@@ -24,6 +22,8 @@ void setup() {
         Serial.println("DrawFFT begin failed");
         while(1);
     }
+
+    Wire.setClock(400000);
 
     // Setup ADC for fast reads
     selAnalog(MIC_PIN);

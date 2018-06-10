@@ -10,7 +10,7 @@ class DrawFFT
   private:
     Adafruit_IS31FL3731_Wing matrix;
 
-    uint8_t peak[15] = {0},     // Peak level of each column for falling dots
+    uint8_t peak[15] = {},     // Peak level of each column for falling dots
         dotCount = 0,           // Frame counter for delaying falling dots
         colCount = 0,           // Frame counter for storing past column data
         drawFrame = 1;          // Frame counter for double bufferred drawing
@@ -22,9 +22,9 @@ class DrawFFT
             LED_ON = 255;
 
     uint8_t col[15][10];                // Column levels for past 10 frames
-    int16_t minLvlAvg[15] = {0};    // Dynamic adjustment of high and low
-    int16_t maxLvlAvg[15] = {32767};        //   levels of graph (probably only sets first item?)
-    int16_t colDiv[15] = {0};           // Used to filter FFT to 15 columns
+    int16_t minLvlAvg[15] = {};    // Dynamic adjustment of high and low
+    int16_t maxLvlAvg[15] = {};        //   levels of graph (probably only sets first item?)
+    int16_t colDiv[15] = {};           // Used to filter FFT to 15 columns
 
     // Noise constants to subtract from FFT output
     static constexpr int16_t noise[32] = {
