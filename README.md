@@ -32,7 +32,8 @@ M3 bolts.
 | M2.5 Nylon Hex Nut                                  | 2   | [93800A350](https://www.mcmaster.com/#93800a350/=1d8896z) |
 | Male + Female Machine Pin Header 2.54 mm Pitch 1x12 | 1   | -                                                         |
 | Male + Female Machine Pin Header 2.54 mm Pitch 1x16 | 1   | -                                                         |
-| Right Angle Pin Header                              | 1   | -                                                         |
+| Right Angle Pin Header 1x8                          | 1   | -                                                         |
+| Right Angle Pin Header 1x5                          | 1   | -                                                         |
 | Frosted Acrylic, 2-3 x 26 x 60 mm                   | 1   | -                                                         |
 
 ## Assembly
