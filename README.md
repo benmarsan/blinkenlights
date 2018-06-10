@@ -1,0 +1,3 @@
+# Blinkenlights
+
+![animation](https://lh3.googleusercontent.com/hIKS4wcoawHdVJgovWyDBKdyWcgjaUKNuvBb5EmavYi7f0uulvnKNEN8QyKMgaS2t4fsLXhxiDFSd89DnSif4Xjs5zVWE2jJTkaQU7s4KvOVyb5qfAM1DGWJlj3hg2CImQbk6y00XsQ=s290-p-k)
