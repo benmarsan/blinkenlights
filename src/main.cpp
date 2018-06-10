@@ -7,9 +7,7 @@
 
 DrawFFT fftDisplay = DrawFFT();
 
-unsigned int sampling_period_us;
 unsigned long microseconds;
-
 int16_t signal[FFT_SIZE];
 
 void setup() {
