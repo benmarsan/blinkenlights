@@ -38,9 +38,7 @@ void loop() {
         signal[i] = anaRead() - MIC_DC_OFFSET;
 
         // Delay for sampling_period_us to read at SAMPLE_RATE
-        while(micros() < (microseconds + sampling_period_us)){
-            //empty loop
-        }
+        while(micros() < (microseconds + sampling_period_us));
     }
 
     // Compute FFT
