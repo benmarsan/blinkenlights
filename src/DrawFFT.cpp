@@ -15,23 +15,10 @@ int DrawFFT::begin() {
         return 0;
     }
 
-    // Clear all frame buffers
-    for(int f = 0; f < 7; f++) {
-        matrix.setFrame(f);
-        matrix.fillScreen(LED_OFF);
-    }
-    // Reset to first frame
-    matrix.setFrame(0);
-    matrix.displayFrame(0);
-
     return 1;
 }
 
 void DrawFFT::update(int16_t *spectrum) {
-    // Double buffer matrix by drawing to next frame while
-    // previous frame is visible on screen
-    //matrix.setFrame(drawFrame);
-
     // Remove noise and apply EQ levels
     for(int k = 0; k < FFT_SIZE_OUT; k++) {
         spectrum[k] = max(spectrum[k] - noise[k], 0);
@@ -99,9 +86,6 @@ void DrawFFT::update(int16_t *spectrum) {
 
         matrix.drawPixel(x, 7 - peak[x], LED_HIGH);
     }
-
-    // Show frame
-    //matrix.displayFrame(drawFrame);
 
     // Every third frame, make the peak pixels drop by 1:
     if(++dotCount >= 3) {
